@@ -1,0 +1,110 @@
+
+Leetcode 452 Minimum Number Of Arrows to burst balloon
+
+class Solution {
+    public int findMinArrowShots(int[][] arr) {
+        int n = arr.length;
+        Arrays.sort(arr,(a,b)->Integer.compare(a[1],b[1]));
+        int arrows=1;
+        int last = arr[0][1];
+        for(int i=1;i<n;i++){
+            if(arr[i][0]<=last){
+                continue;
+            }
+            else{
+                arrows++;
+                last = arr[i][1];
+            }
+        }
+        return arrows;
+    }
+}
+
+leetcode 34 first and last occurence of element in sorted duplicate array
+
+class Solution {
+    public static int first_pos(int arr[],int target){
+        int start=0;
+        int end= arr.length-1;
+        int ans=-1;
+        while(start<=end){
+            int mid =start+(end-start)/2;
+            if(arr[mid] == target){
+                end=mid-1;
+                ans=mid;
+            }
+            else if(arr[mid]>target){
+                end=mid-1;
+            }
+            else{
+                start=mid+1;
+            }
+        }
+        return ans;
+    }
+    public static int last_pos(int arr[],int target){
+        int start=0;
+        int end= arr.length-1;
+        int ans=-1;
+        while(start<=end){
+            int mid =start+(end-start)/2;
+            if(arr[mid] == target){
+                start=mid+1;
+                ans=mid;
+            }
+            else if(arr[mid]>target){
+                end=mid-1;
+            }
+            else{
+                start=mid+1;
+            }
+        }
+        return ans;
+    }
+    public int[] searchRange(int[] arr, int target) {
+        int map[] = new int[2];
+        int first=first_pos(arr,target);
+        int last=last_pos(arr,target);
+        map[0]=first;
+        map[1]=last;
+        return map;
+    }
+}
+
+Leetcode 239 sliding window maximum 
+
+
+TLE ON LAST TEST CASE
+
+class Solution {
+    public int[] maxSlidingWindow(int[] arr, int k) {
+        int n = arr.length;
+        int arr1[] = new int[n-k+1];
+        int j=0;
+        int max =Integer.MIN_VALUE;
+        int  idx=-1;
+        for(int i=0;i<k;i++){
+            if(arr[i]>max){
+                max=arr[i];
+                idx=i;
+            }
+        }
+        arr1[j++] = max;
+        for(int i=k;i<n;i++){
+            if(idx<=(i-k)){
+                max=Integer.MIN_VALUE;
+                for(int i1=idx+1;i1<=i;i1++){
+                    if(arr[i1]>max){
+                        max = arr[i1];
+                        idx=i1;
+                    }
+                }
+            }
+            else{
+                max = Math.max(max,arr[i]);
+            }
+            arr1[j++] = max;
+        }
+        return arr1;
+    }
+}
