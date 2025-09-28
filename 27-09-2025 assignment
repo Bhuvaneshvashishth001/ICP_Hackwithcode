@@ -1,0 +1,68 @@
+Leetcode 88 - Merge sorted array
+
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int i=0;
+        int j=0;
+        ArrayList<Integer> list = new ArrayList<>();
+        while(i<m && j<n){
+            if(nums1[i]<=nums2[j]){
+                list.add(nums1[i]);
+                i++;
+            }
+            else{
+                list.add(nums2[j]);
+                j++;
+            }
+        }
+        while(i<m){
+            list.add(nums1[i]);
+            i++;
+        }
+        while(j<n){
+            list.add(nums2[j]);
+            j++;
+        }
+        for(int i1=0;i1<list.size() ;i1++){
+            nums1[i1] = list.get(i1);
+        }
+    }
+}
+
+Leetcode 215 kth argest in array
+
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        int n = nums.length;
+        PriorityQueue<Integer> pq  =new PriorityQueue<>();
+        for(int i=0;i<n;i++){
+            pq.add(nums[i]);
+            if(pq.size()>k){
+                pq.poll();
+            }
+        }
+        return pq.poll();
+    }
+}
+
+leetcode 367 Valid perfect square
+
+class Solution {
+    public boolean isPerfectSquare(int num) {
+        int low =1;
+        int high = num;
+        while(low<=high){
+            int mid = low+(high-low)/2;
+            if((long)mid*mid == num){
+                return true;
+            }
+            else if((long)mid*mid<num){
+                low = mid+1;
+            }
+            else{
+                high = mid-1;
+            }
+        }
+        return false;
+    }
+}
