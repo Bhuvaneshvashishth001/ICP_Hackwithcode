@@ -17,3 +17,130 @@ class Solution {
         return maxlen;
     }
 }
+
+2 permutation in string 
+
+class Solution {
+    public static boolean match(int freq1[],int freq2[]){
+        for(int i=0;i<freq1.length ;i++){
+            if(freq1[i] !=freq2[i]){
+                return false;
+            }
+        }
+        return true;
+    }
+    public boolean checkInclusion(String s1, String s2) {
+        int m =s1.length();
+        int n = s2.length();
+        if(m>n){
+            return false;
+        }
+        int freq1[] = new int[26];
+        int freq2[] = new int[26];
+        for(int i=0;i<m;i++){
+            freq1[s1.charAt(i)-'a']++;
+            freq2[s2.charAt(i)-'a']++;
+        }
+        for(int i=m;i<n;i++){
+            if(match(freq1,freq2)){
+                return true;
+            }
+            freq2[s2.charAt(i-m)-'a']--;
+            freq2[s2.charAt(i)-'a']++;
+        }
+        return match(freq1,freq2);
+    }
+}
+
+3 Longest Repeating Character Replacement
+
+class Solution {
+    public int characterReplacement(String s, int k) {
+        int i=0;
+        int j=0;
+        int n = s.length();
+        int max_len = 0;
+        int max_freq =0;
+        int map[] =new int[26];
+        while(j<n){
+            char ch = s.charAt(j);
+            map[ch-'A']++;
+            max_freq = Math.max(max_freq,map[ch-'A']);
+            if(j-i+1 - max_freq >k){
+                map[s.charAt(i)-'A']--;
+                i++;
+            }
+            max_len = Math.max(max_len,j-i+1);
+            j++;
+        }
+        return max_len;
+    }
+}
+
+4 - Max Consecutive Ones III
+
+class Solution {
+    public int longestOnes(int[] arr, int k) {
+        int i=0;
+        int j=0;
+        int max_len = 0;
+        int idx = -1;
+        int count_z=0;
+        int n = arr.length;
+        while(j<n){
+            if(arr[j] ==0){
+                count_z++;
+            }
+            while(count_z>k){
+                if(arr[i]==0){
+                    count_z--;
+                }
+                i++;
+            }
+            max_len = Math.max(max_len,j-i+1);
+            j++;
+        }
+        return max_len;
+    }
+}
+
+5 - find all anagram in a string
+
+class Solution {
+    public static boolean match(int freq_s[],int freq_p[]){
+        for(int i=0;i<26;i++){
+            if(freq_s[i]!=freq_p[i]){
+                return false;
+            }
+        }
+        return true;
+    }
+    public List<Integer> findAnagrams(String s, String p) {
+        int freq_s[] = new int[26];
+        int freq_p[] = new int[26];
+        int n=s.length();
+        int m=p.length();
+        List<Integer> list = new ArrayList<>();
+        if(m>n){
+            return list;
+        }
+        for(int i=0;i<m;i++){
+        freq_s[s.charAt(i)-'a']++;
+        freq_p[p.charAt(i)-'a']++;
+        }
+        if(match(freq_s,freq_p)){
+            list.add(0);
+        }
+        for(int i=m ;i<n;i++){
+            freq_s[s.charAt(i-m)-'a']--;
+            freq_s[s.charAt(i)-'a']++;
+            if(match(freq_s,freq_p)){
+                list.add(i-m+1);
+            }
+         }
+         return list;
+    }
+}
+
+
+5 - find all anagrams
