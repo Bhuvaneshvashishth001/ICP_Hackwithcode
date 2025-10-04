@@ -1,0 +1,99 @@
+1 - Minimum Number Of Arrows to Burst Ballons
+
+class Solution {
+    public int findMinArrowShots(int[][] arr) {
+        int n = arr.length;
+        Arrays.sort(arr,(a,b)->Integer.compare(a[1],b[1]));
+        int arrows=1;
+        int last = arr[0][1];
+        for(int i=1;i<n;i++){
+            if(arr[i][0]<=last){
+                continue;
+            }
+            else{
+                arrows++;
+                last = arr[i][1];
+            }
+        }
+        return arrows;
+    }
+}
+
+2 - Non Overlapping Intervals
+
+class Solution {
+    public int eraseOverlapIntervals(int[][] arr) {
+        Arrays.sort(arr,(a,b)->Integer.compare(a[1],b[1]));
+        int last = arr[0][1];
+        int count =0;
+        for(int i=1;i<arr.length;i++){
+            if(arr[i][0]<last){
+                count++;
+            }
+            else{
+                last = arr[i][1];
+            }
+        }
+        return count;
+    }
+}
+
+3 -   Lemonade change 
+
+class Solution {
+    public boolean lemonadeChange(int[] bills) {
+        int five =0;
+        int ten =0;
+        int twenty=0;
+        for(int bill : bills){
+            if(bill == 5){
+                five++;
+            }
+            else if(bill == 10){
+                if(five>=1){
+                    ten++;
+                    five--;
+                }
+                else{
+                    return false;
+                }
+            }
+            else{
+                if(ten>=1 && five>=1){
+                    ten--;
+                    five--;
+                }
+                else if(five>=3){
+                    five-=3;
+                }
+                else{
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
+
+4 - Boats to save people
+
+class Solution {
+    public int numRescueBoats(int[] arr, int limit) {
+        Arrays.sort(arr);
+        int i=0;
+        int j=arr.length-1;
+        int count=0;
+        while(i<=j){
+            if(arr[i]+arr[j]<=limit){
+                i++;
+                j--;
+            }
+            else{
+                j--;
+            }
+            count++;
+        }
+        return count;
+    }
+}
+
