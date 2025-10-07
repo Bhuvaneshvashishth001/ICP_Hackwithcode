@@ -1,0 +1,54 @@
+1 Evaluate reverse polish notation 
+
+class Solution {
+    public int evalRPN(String[] tokens) {
+        Stack<Integer> stack = new Stack<>();
+
+        for (String c : tokens) {
+            if (c.equals("+")) {
+                stack.push(stack.pop() + stack.pop());
+            } else if (c.equals("-")) {
+                int second = stack.pop();
+                int first = stack.pop();
+                stack.push(first - second);
+            } else if (c.equals("*")) {
+                stack.push(stack.pop() * stack.pop());
+            } else if (c.equals("/")) {
+                int second = stack.pop();
+                int first = stack.pop();
+                stack.push(first / second);
+            } else {
+                stack.push(Integer.parseInt(c));
+            }
+        }
+
+        return stack.peek();        
+    }
+}
+
+2 - Online stock span 
+
+
+
+
+class Solution {
+    public ArrayList<Integer> calculateSpan(int[] arr) {
+        // write code here
+        int n =arr.length;
+        ArrayList<Integer> list = new ArrayList<>();
+        ArrayDeque<Integer> stack = new ArrayDeque<>();
+        for(int i=0 ;i<n ;i++){
+            while(!stack.isEmpty() && arr[stack.peek()]<=arr[i]){
+                stack.pop();
+            }
+            if(stack.isEmpty()){
+                list.add(i+1);
+            }
+            else{
+                list.add(i-stack.peek());
+            }
+            stack.push(i);
+        }
+        return list;
+    }
+}
